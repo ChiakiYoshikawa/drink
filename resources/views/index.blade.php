@@ -9,11 +9,18 @@
     </div>
 
     <div class="text-right"> <!--あとでいじるかも　text-end-->
-      <a class="btn btn-success" href="#">新規登録</a>
+    <a class="btn btn-warning" href="{{ route('product.create') }}">新規登録</a>
     </div>
 
   </div>
 </div>
+
+@if(session('success'))
+<table class="table table-bordered">
+  <div class="alert alert-success">
+    {{ session('success') }}
+  </div>
+@endif
 
 <table class="table table-bordered">
 

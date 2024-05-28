@@ -29,7 +29,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view('create')
+        ->with('companies',$companies);
     }
 
     /**
@@ -38,9 +40,25 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request) //store(Request $request)→ProductRequestに変える
     {
-        //
+        DB::beginTransaction();
+
+        try{
+            $imagePath = null;
+            if ($request->hasFile('img_path')) {
+                $imagePath = $request->file('img_path')->store('images/products', 'public');
+            }
+            
+            $product = new Product();
+            $product->registProduct($request,$imagePath);
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+            return back();
+        }
+
+        return redirect(route('product.create'));
     }
 
     /**

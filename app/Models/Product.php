@@ -31,4 +31,16 @@ class Product extends Model
             ->select('products.*', 'companies.company_name as company_name')
             ->orderBy('products.created_at', 'desc');
     }
+
+    public function registProduct($data,$imagePath) //$imagePath追加
+    {
+        DB::table('products')->insert([
+            'company_id' => $data['company_id'],
+            'product_name' => $data['product_name'],
+            'price' => $data['price'],
+            'stock' => $data['stock'],
+            'comment' => $data['comment'],
+            'img_path' => $data['$imagePath'],
+        ]);
+    }  
 }
