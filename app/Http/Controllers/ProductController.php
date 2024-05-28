@@ -79,8 +79,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
-    {
-        //
+    {        
+        $companies = Company::all();
+        return view('edit', compact('product', 'companies'));
     }
 
     /**
@@ -90,9 +91,35 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $path = 'images/products';
+                $imagePath = $image->store($path, 'public');
+            }
+    
+            $product->update([
+                'product_name' => $request->input('product_name'),
+                'price' => $request->input('price'),
+                'stock' => $request->input('stock'),
+                'company_id' => $request->input('company_id'),
+                'comment' => $request->input('comment'),
+                'img_path' => $imagePath ?? $product->img_path,
+            ]);
+    
+            DB::commit();
+    
+            return redirect()->route('index')
+                ->with('success', $product->product_name . 'を変更しました');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
     }
 
     /**

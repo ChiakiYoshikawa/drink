@@ -25,6 +25,11 @@
     </div>
 </div>
 
+<div class="d-flex"> <!--d-flex　水平に並べるという意味-->
+   <div>
+    <a class="btn btn-warning" href="{{ route('product.edit', ['product' => $product->id]) }}">編集</a>
+   </div> 
+   
 <div class="pull-right">
     <a class="btn btn-info" href="{{ url('/drink') }}">戻る</a>
 </div>

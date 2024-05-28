@@ -24,3 +24,5 @@ Route::get('/drink', [App\Http\Controllers\ProductController::class, 'index'])->
 Route::get('/product/create',[App\Http\Controllers\ProductController::class, 'create'])->name('product.create');
 Route::post('/product/store/',[App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
 Route::get('/product/show/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
+Route::get('/product/edit/{product}',[App\Http\Controllers\ProductController::class, 'edit'])->name('product.edit');
+Route::put('/product/edit/{product}',[App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
