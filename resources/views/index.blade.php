@@ -48,6 +48,14 @@
       <td>{{ $product->company_name }}</td>
       <td style="text-align:center">
         <a class="btn btn-info" href="{{ route('product.show',$product->id) }}">詳細</a>
+
+        <td style="text-align:center">
+        <form action="{{ route('product.destroy',$product->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-sm btn-danger" onclick='return confirm("削除しますか？");'>削除</button>
+        </form>
+      </td>
     </tr>
   </tbody>
   @endforeach

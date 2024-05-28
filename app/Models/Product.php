@@ -42,5 +42,10 @@ class Product extends Model
             'comment' => $data['comment'],
             'img_path' => $imagePath,
         ]);
-    }  
+    } 
+
+    public function deleteProduct()
+    {
+        DB::table('products')->where('id', $this->id)->delete();
+    }
 }
