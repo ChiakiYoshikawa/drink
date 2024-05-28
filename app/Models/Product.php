@@ -40,7 +40,7 @@ class Product extends Model
             'price' => $data['price'],
             'stock' => $data['stock'],
             'comment' => $data['comment'],
-            'img_path' => $data['$imagePath'],
+            'img_path' => $imagePath,
         ]);
     }  
 }

@@ -68,33 +68,14 @@
         </div>
     </div>
 
-    <!--<div class="col-12 mb-2 mt-2">
+    <div class="col-12 mb-2 mt-2">
         <div class="form-group">
             <input type="file" name="img_path" class="form-control-file">
             @if($errors->has('img_path'))
               <span style="color:red;">{{ $errors->first('img_path') }}</span>
             @endif
         </div>
-    </div> -->
-
-    <!--確認ポイント　画像保存--->
-    <div class="col-12 mb-2 mt-2">
-        <div class="form-group">
-        <label for="image">現在の画像:</label>
-        <img src="{{ asset($product->img_path) }}" alt="Product Image" style="max-width: 60px;">
-        </div>
     </div>
-
-    <div class="col-12 mb-2 mt-2">
-      <div class="form-group">
-        <label for="img_path">新しい画像を選択してください:</label>
-        <input type="file" name="new_img_path" class="form-control-file">
-        @if($errors->has('img_path'))
-            <span style="color:red;">{{ $errors->first('img_path') }}</span>
-        @endif
-      </div>
-    </div>
-    <!--確認ポイント　ここまで--->
 
     <div class="d-flex">
         <div>

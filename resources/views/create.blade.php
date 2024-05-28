@@ -35,7 +35,7 @@
         <div class=“form-group”>
             <input type="text" name="price" class="form-control" placeholder="価格" value="{{ old('price') }}">
             @if($errors->has('price'))
-                <span style="color:red;">{ $errors->first('price') }}</span>
+                <span style="color:red;">{{ $errors->first('price') }}</span>
             @endif
         </div>
     </div>
