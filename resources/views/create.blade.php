@@ -9,7 +9,7 @@
         </div>
 
         <div class="pull-right">
-            <a class="btn btn-info" href="{{ url('/nomimono') }}">戻る</a>
+            <a class="btn btn-info" href="{{ url('/drink') }}">戻る</a>
         </div>
 
     </div>
