@@ -133,13 +133,14 @@ class ProductController extends Controller
     {
         $product->deleteProduct();
         return redirect()->route('index')
-        ->with('success',$product->name . 'を削除しました');
+        ->with('success',$product->product_name . 'を削除しました');
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $query = (new Product())->getProductsQuery();
-        $companies = Company::all();
-
+        
+        // Add search filter if needed
         if ($request->filled('keyword')){
             $query->where('product_name', 'like', '%' . $request->input('keyword') . '%');
         }
@@ -164,8 +165,14 @@ class ProductController extends Controller
             $query->where('stock', '<=', $request->input('stock_max'));
         }
 
-        $products = $query->paginate(5)->appends($request->all());
+        $products = $query->paginate(5)->appends($request->except('page'));
+        $companies = Company::getCompaniesQuery();
+
+        if ($request->ajax()) {
+            return view('partials.products', compact('products'))->render();
+        }
+
         return view('index', compact('products', 'companies'));
     }
-    
+
 }
