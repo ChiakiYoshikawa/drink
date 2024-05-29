@@ -70,6 +70,31 @@
             }
         });
     }
+
+    function deleteProduct(productId) {
+        if (confirm("本当に削除しますか？")) {
+            $.ajax({
+                url: '/product/' + productId,
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(data) {
+                    if (data.success) {
+                        alert('削除しました');
+                        $('#product-' + productId).remove();
+                    } else {
+                        alert('削除に失敗しました');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+            });
+        }
+    }
+
+
 </script>
 
 @endsection

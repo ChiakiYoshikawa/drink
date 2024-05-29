@@ -136,9 +136,15 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->deleteProduct();
+    
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+    
         return redirect()->route('index')
-        ->with('success',$product->product_name . 'を削除しました');
+            ->with('success', $product->product_name . 'を削除しました');
     }
+    
 
     public function search(Request $request)
     {
