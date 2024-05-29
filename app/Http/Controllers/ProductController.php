@@ -15,10 +15,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = (new Product())->getProductsQuery()->paginate(5);
         $companies = Company::getCompaniesQuery();
+    
+        if ($request->ajax()) {
+            return view('partials.products', compact('products'))->render();
+        }
     
         return view('index', compact('products', 'companies'));
     }
@@ -144,35 +148,34 @@ class ProductController extends Controller
         if ($request->filled('keyword')){
             $query->where('product_name', 'like', '%' . $request->input('keyword') . '%');
         }
-
+    
         if ($request->filled('company_id')){
             $query->where('company_id', $request->input('company_id'));
         }
-
+    
         if ($request->filled('price_min')){
             $query->where('price', '>=', $request->input('price_min'));
         }
-
+    
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->input('price_max'));
         }
-
+    
         if ($request->filled('stock_min')){
             $query->where('stock', '>=', $request->input('stock_min'));
         }
-
+    
         if ($request->filled('stock_max')){
             $query->where('stock', '<=', $request->input('stock_max'));
         }
-
+    
         $products = $query->paginate(5)->appends($request->except('page'));
-        $companies = Company::getCompaniesQuery();
-
+    
         if ($request->ajax()) {
             return view('partials.products', compact('products'))->render();
         }
-
-        return view('index', compact('products', 'companies'));
-    }
+    
+        return view('index', compact('products'));
+    }    
 
 }

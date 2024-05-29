@@ -66,8 +66,10 @@
             },
             error: function(xhr) {
                 console.error(xhr);
+                alert('データの取得に失敗しました。');
             }
         });
     }
 </script>
+
 @endsection
