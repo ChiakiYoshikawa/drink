@@ -24,6 +24,11 @@ class Product extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
     public function getProductsQuery()
     {
         return DB::table('products')
