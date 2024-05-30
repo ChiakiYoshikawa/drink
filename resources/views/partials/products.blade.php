@@ -7,7 +7,9 @@
             <th>価格</th>
             <th>在庫数</th>
             <th>メーカー名</th>
-            <th></th>
+            <th style="text-align:center">
+            <a class="btn btn-warning" href="{{ route('product.create') }}">新規登録</a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,4 +31,3 @@
 </table>
 
 {!! $products->links('pagination::bootstrap-5') !!}
-

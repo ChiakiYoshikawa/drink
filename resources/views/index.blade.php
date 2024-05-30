@@ -24,11 +24,16 @@
                     <input type="number" name="stock_min" placeholder="最低在庫数" min="0">
                     <input type="number" name="stock_max" placeholder="最高在庫数" min="0">
                 </div>
+                <select id="sortColumn" name="sortColumn">
+                    <option value="">並び替え</option>
+                    <option value="id">No</option>
+                    <option value="product_name">商品名</option>
+                    <option value="price">価格</option>
+                    <option value="stock">在庫数</option>
+                    <option value="company_name">メーカー名</option>
+                </select>
                 <input type="submit" value="検索">
             </form>
-        </div>
-        <div class="text-right">
-            <a class="btn btn-warning" href="{{ route('product.create') }}">新規登録</a>
         </div>
     </div>
 </div>
@@ -96,31 +101,26 @@
 
 
 
-$(document).ready(function() {
-    $('#productTable th').click(function() {
-        var table = $(this).parents('table').eq(0);
-        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
-        this.asc = !this.asc;
-        if (!this.asc) {
-            rows = rows.reverse();
-        }
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i]);
-        }
+    $(document).ready(function() {
+        $('#sortColumn').change(function() {
+            var column = $(this).val();
+            var url = "{{ route('product.search') }}";
+            var data = $('#searchForm').serialize() + '&sortColumn=' + column;
+            
+            $.ajax({
+                url: url,
+                data: data,
+                type: 'GET',
+                success: function(response) {
+                    $('#productTable').html(response);
+                },
+                error: function(xhr) {
+                    console.error(xhr);
+                    alert('データの取得に失敗しました。');
+                }
+            });
+        });
     });
-
-    function comparer(index) {
-        return function(a, b) {
-            var valA = getCellValue(a, index);
-            var valB = getCellValue(b, index);
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
-        };
-    }
-
-    function getCellValue(row, index) {
-        return $(row).children('td').eq(index).text();
-    }
-});
 
 </script>
 

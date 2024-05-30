@@ -173,6 +173,13 @@ class ProductController extends Controller
     
         if ($request->filled('stock_max')){
             $query->where('stock', '<=', $request->input('stock_max'));
+
+        }
+
+        if ($request->filled('sortColumn')) {
+            $column = $request->input('sortColumn');
+            $direction = $request->filled('sortDirection') ? $request->input('sortDirection') : 'asc';
+            $query->orderBy($column, $direction);
         }
     
         $products = $query->paginate(5)->appends($request->except('page'));
