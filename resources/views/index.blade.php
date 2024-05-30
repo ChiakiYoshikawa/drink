@@ -42,31 +42,27 @@
 <div id="productTable">
     @include('partials.products', ['products' => $products])
 </div>
+
 @endsection
 
 @section('scripts')
 <script>
-    // 検索フォームの送信
     $(document).on('submit', '#searchForm', function(e) {
         e.preventDefault();
         fetchProducts($(this).attr('action'), $(this).serialize());
     });
 
-    // ページネーションリンクのクリック
     $(document).on('click', '.pagination a', function(e) {
         e.preventDefault();
         fetchProducts($(this).attr('href'));
     });
 
-    // 商品を取得する関数
     function fetchProducts(url, data = {}) {
         $.ajax({
             url: url,
             data: data,
             success: function(response) {
                 $('#productTable').html(response);
-                addSortingHandlers(); // ソート機能のハンドラを再度追加
-                addDeleteHandlers(); // 削除機能のハンドラを再度追加
             },
             error: function(xhr) {
                 console.error(xhr);
@@ -75,7 +71,6 @@
         });
     }
 
-    // 商品を削除する関数
     function deleteProduct(productId) {
         if (confirm("本当に削除しますか？")) {
             $.ajax({
@@ -99,20 +94,20 @@
         }
     }
 
-    // ソート機能のハンドラを追加する関数
-    function addSortingHandlers() {
-        $('#productTable th.sortable').click(function() {
-            var table = $(this).parents('table').eq(0);
-            var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
-            this.asc = !this.asc;
-            if (!this.asc) {
-                rows = rows.reverse();
-            }
-            for (var i = 0; i < rows.length; i++) {
-                table.append(rows[i]);
-            }
-        });
-    }
+
+
+$(document).ready(function() {
+    $('#productTable th').click(function() {
+        var table = $(this).parents('table').eq(0);
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+        this.asc = !this.asc;
+        if (!this.asc) {
+            rows = rows.reverse();
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i]);
+        }
+    });
 
     function comparer(index) {
         return function(a, b) {
@@ -125,22 +120,8 @@
     function getCellValue(row, index) {
         return $(row).children('td').eq(index).text();
     }
+});
 
-    // 削除機能のハンドラを追加する関数
-    function addDeleteHandlers() {
-        $(document).on('click', '.delete-product', function(e) {
-            e.preventDefault();
-            if (confirm('本当に削除しますか？')) {
-                var productId = $(this).data('product-id');
-                deleteProduct(productId);
-            }
-        });
-    }
-
-    // 初期化処理
-    $(document).ready(function() {
-        addSortingHandlers(); // ソート機能のハンドラを初期化
-        addDeleteHandlers(); // 削除機能のハンドラを初期化
-    });
 </script>
+
 @endsection
