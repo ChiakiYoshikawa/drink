@@ -5,11 +5,19 @@
     <div class="col-lg-12 margin-tb">
 
         <div class="pull-left">
-            <h2 style="font-size:1rem;">商品編集画面</h2>
+            <h2 style="font-size:1.5rem;">商品編集画面</h2>
          </div>
 
     </div>
 </div>
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+        <h3>ID:{{ $product->id }}</h3>
 
 <div style="text-align:right;">
 <form action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
@@ -31,7 +39,7 @@
         <div class="form-group">
             <input type="text" name="price" class="form-control" placeholder="価格" value="{{ $product->price }}">
             @if($errors->has('price'))
-              <span style="color:red;">{ $errors->first('price') }}</span>
+              <span style="color:red;">{{ $errors->first('price') }}</span>
             @endif
         </div>
     </div>
@@ -47,9 +55,9 @@
 
     <div class="col-12 mb-2 mt-2">
         <div class="form-group">
-            <input type="text" name="comment" class="form-control" placeholder="コメント" value="{{ $product->comment }}">
+            <textarea name="comment" class="form-control" placeholder="コメント">{{ $product->comment }}</textarea>
             @if($errors->has('comment'))
-              <span style="color:red;">{{ $errors->first('comment') }}</span>
+                <span style="color:red;">{{ $errors->first('comment') }}</span>
             @endif
         </div>
     </div>

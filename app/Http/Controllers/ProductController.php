@@ -58,12 +58,15 @@ class ProductController extends Controller
             $product = new Product();
             $product->registProduct($request,$imagePath);
             DB::commit();
+
+            return redirect(route('product.create'))
+            ->with('success', '登録しました');
+            
         } catch (\Exception $e){
             DB::rollback();
             return back();
         }
 
-        return redirect(route('product.create'));
     }
 
     /**
@@ -99,11 +102,11 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         DB::beginTransaction();
-
+    
         try {
             $imagePath = null;
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
+            if ($request->hasFile('img_path')) {
+                $image = $request->file('img_path');
                 $path = 'images/products';
                 $imagePath = $image->store($path, 'public');
             }
@@ -119,13 +122,14 @@ class ProductController extends Controller
     
             DB::commit();
     
-            return redirect()->route('index')
-                ->with('success', $product->product_name . 'を変更しました');
+            return redirect(route('product.edit', $product->id))
+            ->with('success', '変更しました');
+    
         } catch (\Exception $e) {
             DB::rollback();
-            return back();
+            return back()->with('error', '変更に失敗しました');
         }
-    }
+    }    
 
     /**
      * Remove the specified resource from storage.

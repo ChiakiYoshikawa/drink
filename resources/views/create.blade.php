@@ -15,6 +15,11 @@
     </div>
 </div>
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 <div style="text-align:right;">
 <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
@@ -50,8 +55,8 @@
     </div>
 
     <div class="col-12 mb-2 mt-2">
-        <div class=“form-group”>
-            <input type="text" name="comment" class="form-control" placeholder="コメント" value="{{ old('comment') }}">
+        <div class="form-group">
+            <textarea name="comment" class="form-control" placeholder="コメント">{{ old('comment') }}</textarea>
             @if($errors->has('comment'))
                 <span style="color:red;">{{ $errors->first('comment') }}</span>
             @endif

@@ -48,17 +48,21 @@ class Product extends Model
             'img_path' => $imagePath,
         ]);
     }
-
     public function updateProduct($data, $imagePath)
     {
-        DB::table('products')->update([
+        $productData = [
             'company_id' => $data['company_id'],
             'product_name' => $data['product_name'],
             'price' => $data['price'],
             'stock' => $data['stock'],
             'comment' => $data['comment'],
-            'img_path' => $imagePath,
-        ]);
+        ];
+    
+        if ($imagePath) {
+            $productData['img_path'] = $imagePath;
+        }
+    
+        DB::table('products')->where('id', $data['id'])->update($productData);
     }
     
 

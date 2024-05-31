@@ -54,7 +54,6 @@ class ProductRequest extends FormRequest
             'stock.required' => ':attributeは必須項目です。',
             'stock.integer'=> ':attributeは半角数字で入力してください。',
             'company_id.required' => ':attributeは必須項目です。',
-            'img_path.image' => '画像ファイルをアップロードしてください。',
             'img_path.mimes' => '画像ファイルはjpeg、png、jpg、gif形式のみ対応しています。',
             'img_path.max' => '画像サイズは2MB以下にしてください。',
             'comment.max' => 'コメントは:max文字以内で入力してください。',
