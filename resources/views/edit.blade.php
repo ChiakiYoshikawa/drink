@@ -67,7 +67,8 @@
             <select name="company_id" class="form-select">
                 <option value="">分類を選択してください</option>
                 @foreach($companies as $company)
-                  <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                  <option value="{{ $company->id }}" {{ $product->company_id == $company->id ? 'selected' : '' }}>
+                    {{ $company->company_name }}
                 @endforeach
             </select>
             @if($errors->has('company_id'))
@@ -100,5 +101,3 @@
 </form>
 </div>
 @endsection
-
-
